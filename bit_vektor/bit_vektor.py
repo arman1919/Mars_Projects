@@ -2,6 +2,37 @@ def add_zero(num):
     return (64-len(num))*"0"+num
 
 
+def check_int(input_message,min_value,max_value):
+    """_summary_
+
+    Args:
+        input_message (str): input_message
+        min_value (int): min_value
+        max_value (int): max_value
+
+
+
+    Returns:
+        _type_: int
+    """
+    
+    while True:
+        num = input(input_message)
+    
+        try:
+            
+            num = int(num)
+            
+            if num > max_value or num < min_value:
+                raise ValueError
+            
+            return num
+        
+        except ValueError:
+            print("ValueError, enter agin")
+            continue
+    
+
 class Bit_Vektor:
     def __init__(self,size:int) -> None:
         """_summary_
@@ -32,16 +63,13 @@ class Bit_Vektor:
             
         """
         
-        if n > self.size or n < 0:
-            print("Index out of range")
-            raise IndexError
-        
         cell = n // 64
         
         index = n % 64
          
         
         self._vektor_list[-cell-1] |= (1 << index)
+        
     
     def reset(self,n):
         """_summary_
@@ -53,10 +81,7 @@ class Bit_Vektor:
             (   0 <= n < size of bit-vektor )
             
         """
-        
-        if n > self.size or n < 0:
-            print("Index out of range")
-            raise IndexError
+    
         
         cell = n // 64
         
@@ -87,12 +112,38 @@ class Bit_Vektor:
 
 if __name__ == "__main__":
     
-    v = Bit_Vektor(459)
+    input_message = "Enter size forbit-vektor - "
+    
+    size = check_int(input_message,0,100000)
+    
+    bit_vektor = Bit_Vektor(size)
+            
+    
+    while True:
+        input_message = "Enter orpeator - "
+        print("1) put 1 in the specified position ")
+        print("2) put 0 in the specified position")
+        print("3) Print bit-vektor")
+        print("0) exit")
+        
+        sel = check_int(input_message,0,3)
 
-    v.set(32)
-    print(v)
-
-    print()
-
-    v.reset(32)
-    print(v)
+        if sel == 0:
+            break
+        elif sel == 1:
+            input_message = f"Enter pazition 0 - {size} - "
+            
+            
+            index = check_int(input_message,0,size)
+            bit_vektor.set(index)
+            print(f"the number at position {index} has been changed to 1")
+        elif sel == 2:
+            input_message = f"Enter pazition 0 - {size} - "
+            
+            
+            index = check_int(input_message,0,size)
+            bit_vektor.set(index)  
+            print(f"the number at position {index} has been changed to 0")
+        elif sel == 3:
+            print(bit_vektor)
+            
